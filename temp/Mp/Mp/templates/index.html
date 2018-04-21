@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Video Streaming Demonstration</title>
+      <script src="/static/jquery-3.2.1.min.js"></script>
+      <script>
+
+          function save()
+          {
+              var save_val = $("#save_bnt").val();
+              var flag = 1;
+              if (save_val == "不保存")
+                flag = 0;
+
+
+              $.post("/set",{save:flag},function(data, textStatus, jqXHR){
+                    if (save_val == "保存")
+                        $("#save_bnt").val("不保存");
+                    else
+                        $("#save_bnt").val("保存");
+              });
+
+          }
+
+      </script>
+  </head>
+  <body>
+    <h1>Video Streaming Demonstration</h1>
+    <img src="{{ url_for('video_feed') }}">
+    <!--Many images ('video_fee' pictures set-->
+    {% if save_status%}
+        <input type="button" value="不保存" class="bn" onclick="save()" id="save_bnt"/>
+    {% else %}
+        <input type="button" value="保存" class="bn" onclick="save()" id="save_bnt"/>
+    {%  endif %}
+  </body>
+</html>
